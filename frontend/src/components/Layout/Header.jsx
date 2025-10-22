@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Car, Menu, X, User, Heart, ShoppingCart } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -17,6 +16,11 @@ const Header = () => {
   ];
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    logout();
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
@@ -58,12 +62,12 @@ const Header = () => {
                     <User className="w-5 h-5" />
                     <span>{user.name}</span>
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                     <Link to="/dashboard" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                       Dashboard
                     </Link>
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Logout
@@ -97,12 +101,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 border-t border-gray-200"
-          >
+          <div className="md:hidden py-4 border-t border-gray-200 transition-all duration-300 ease-in-out">
             <nav className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link
@@ -118,25 +117,25 @@ const Header = () => {
               ))}
               {user ? (
                 <>
-                  <Link to="/dashboard" className="text-gray-700 hover:text-blue-600">
+                  <Link to="/dashboard" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>
                     Dashboard
                   </Link>
-                  <button onClick={logout} className="text-left text-gray-700 hover:text-blue-600">
+                  <button onClick={handleLogout} className="text-left text-gray-700 hover:text-blue-600">
                     Logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="text-gray-700 hover:text-blue-600">
+                  <Link to="/login" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>
                     Login
                   </Link>
-                  <Link to="/register" className="text-gray-700 hover:text-blue-600">
+                  <Link to="/register" className="text-gray-700 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>
                     Register
                   </Link>
                 </>
               )}
             </nav>
-          </motion.div>
+          </div>
         )}
       </div>
     </header>

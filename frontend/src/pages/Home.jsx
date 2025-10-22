@@ -1,81 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Search, Car, Shield, Zap, Star } from 'lucide-react';
-import AdvancedSearch from '../components/Search/AdvancedSearch';
+import { Car, Shield, Zap, Star } from 'lucide-react';
 
 const Home = () => {
-  const [featuredCars, setFeaturedCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Mock data for featured cars
-    const mockCars = [
-      {
-        _id: '1',
-        make: 'Audi',
-        model: 'A4 Premium',
-        year: 2021,
-        price: 32450,
-        mileage: 18500,
-        fuelType: 'Hybrid',
-        images: [
-          {
-            url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-            alt: 'Audi A4'
-          }
-        ],
-        location: { city: 'New York', state: 'NY' }
-      },
-      {
-        _id: '2',
-        make: 'BMW',
-        model: '3 Series',
-        year: 2022,
-        price: 41200,
-        mileage: 12300,
-        fuelType: 'Petrol',
-        images: [
-          {
-            url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-            alt: 'BMW 3 Series'
-          }
-        ],
-        location: { city: 'Los Angeles', state: 'CA' }
-      }
-    ];
-    
-    setFeaturedCars(mockCars);
-    setLoading(false);
-  }, []);
-
-  const handleSearch = (searchData) => {
-    console.log('Searching for:', searchData);
-    // In a real app, this would call your API
-  };
+  const featuredCars = [
+    {
+      _id: '1',
+      make: 'Audi',
+      model: 'A4 Premium',
+      year: 2021,
+      price: 32450,
+      mileage: 18500,
+      fuelType: 'Hybrid',
+      images: [
+        {
+          url: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+          alt: 'Audi A4'
+        }
+      ]
+    },
+    {
+      _id: '2',
+      make: 'BMW',
+      model: '3 Series',
+      year: 2022,
+      price: 41200,
+      mileage: 12300,
+      fuelType: 'Petrol',
+      images: [
+        {
+          url: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+          alt: 'BMW 3 Series'
+        }
+      ]
+    },
+    {
+      _id: '3',
+      make: 'Mercedes-Benz',
+      model: 'C-Class',
+      year: 2020,
+      price: 35800,
+      mileage: 24700,
+      fuelType: 'Diesel',
+      images: [
+        {
+          url: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+          alt: 'Mercedes C-Class'
+        }
+      ]
+    }
+  ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold mb-6"
-          >
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Find Your Perfect Car
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl mb-8 max-w-2xl mx-auto"
-          >
+          </h1>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
             Discover thousands of certified pre-owned vehicles with our advanced search and virtual inspection features.
-          </motion.p>
+          </p>
           
-          <AdvancedSearch onSearch={handleSearch} isLoading={loading} />
+          {/* Search Bar */}
+          <div className="bg-white rounded-lg p-6 max-w-4xl mx-auto shadow-lg">
+            <div className="flex flex-col md:flex-row gap-4">
+              <input
+                type="text"
+                placeholder="Search by make, model, or features..."
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+              />
+              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                Search Cars
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -93,12 +93,10 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredCars.map((car, index) => (
-              <motion.div
+              <div
                 key={car._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <div className="h-48 bg-gray-200 relative">
                   <img
@@ -131,8 +129,17 @@ const Home = () => {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              to="/cars"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            >
+              View All Vehicles
+            </Link>
           </div>
         </div>
       </section>
@@ -144,6 +151,9 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Why Choose AutoSphere?
             </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              We're revolutionizing car buying with cutting-edge technology and customer-focused services
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -169,20 +179,43 @@ const Home = () => {
                 description: "Every vehicle undergoes rigorous certification process"
               }
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+                className="text-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="text-blue-600 mb-4 flex justify-center">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-3 text-gray-900">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-blue-600 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Find Your Dream Car?
+          </h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Join thousands of satisfied customers who found their perfect vehicle with AutoSphere.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/cars"
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Browse Inventory
+            </Link>
+            <Link
+              to="/sell"
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+            >
+              Sell Your Car
+            </Link>
           </div>
         </div>
       </section>
