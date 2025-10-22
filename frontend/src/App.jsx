@@ -2,6 +2,10 @@ import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 
+// Context
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+
 // Components
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -19,25 +23,29 @@ import Checkout from './pages/Checkout';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/cars" element={<CarListing />} />
-            <Route path="/cars/:id" element={<CarDetails />} />
-            <Route path="/virtual-showroom" element={<VirtualShowroom />} />
-            <Route path="/sell" element={<SellCar />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route path="/checkout" element={<Checkout />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="min-h-screen bg-gray-50 flex flex-col">
+            <Header />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cars" element={<CarListing />} />
+                <Route path="/cars/:id" element={<CarDetails />} />
+                <Route path="/virtual-showroom" element={<VirtualShowroom />} />
+                <Route path="/sell" element={<SellCar />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/dashboard/*" element={<Dashboard />} />
+                <Route path="/checkout" element={<Checkout />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

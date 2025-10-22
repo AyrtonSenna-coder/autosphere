@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const location = useLocation();
 
   const navLinks = [
@@ -21,6 +21,23 @@ const Header = () => {
     logout();
     setIsMenuOpen(false);
   };
+
+  // Show loading state or simple header while auth loads
+  if (loading) {
+    return (
+      <header className="bg-white shadow-lg sticky top-0 z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <Link to="/" className="flex items-center space-x-2 text-2xl font-bold text-blue-600">
+              <Car className="w-8 h-8" />
+              <span>AutoSphere</span>
+            </Link>
+            <div className="text-gray-500">Loading...</div>
+          </div>
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-white shadow-lg sticky top-0 z-50">
